@@ -110,14 +110,24 @@ INSERT INTO compra VALUES
 ('74185296300', 19, '2026-04-24 11:40:00', 32.00),
 ('36925814700', 20, '2026-04-24 11:45:00', 28.00);
 
-ALTER TABLE endereco 
-RENAME TO logradouro;
+ALTER TABLE endereco RENAME COLUMN rua TO logradouro;
 
-ALTER TABLE produto
-RENAME nome_produto TO nome;
+ALTER TABLE produto RENAME COLUMN nome_produto TO nome;
 
-ALTER TABLE produto
-RENAME descricao TO descricao_curta;
+ALTER TABLE produto RENAME COLUMN descricao TO descricao_curta;
 
-ALTER TABLE compra 
-RENAME valor_total_compra TO valor_total;
+ALTER TABLE compra RENAME COLUMN valor_total_compra TO valor_total;
+
+UPDATE compra SET valor_total = 250 WHERE fk_codigo_produto = 1;
+
+UPDATE compra SET valor_total = valor_total * 0.9 WHERE valor_total > 199;
+
+UPDATE produto SET preco_unitario = preco_unitario * 1.05;
+
+SELECT * FROM compra WHERE valor_total > 200;
+
+SELECT * FROM compra WHERE data_hora_compra >= '2026-04-01' AND data_hora_compra < '2026-05-01';
+
+SELECT nome, quantidade, preco_unitario FROM produto WHERE preco_unitario < 99.90;
+
+DELETE FROM compra WHERE data_hora_compra < '2026-01-01';
